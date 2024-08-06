@@ -32,14 +32,19 @@ if 'timeEntries' not in st.session_state:
 # load the openai_api key
 openai_api_key = st.secrets["OpenAI_key"]
 
-def GetFolderList():
-   cwd = os.getcwd()
-   subfolders = os.walk(cwd)
-   print(cwd, subfolders)
+def GetFolderList(root=None):
+    if(root == None):
+       root = os.path.expanduser('~')
+    subfolderObject = [x for x in os.scandir(root) ] 
+    subfolders = [n.name for n in subfolderObject if n.is_dir() == True]
+    cwd = os.getcwd()
+    print(cwd)
+    print("Subfolders(",cwd, ")", subfolders)
+    return subfolders
 
 def Config():
-    source_folder = st.selectbox("Select Source Folder")
-    GetFolderList()
+    subfolders = GetFolderList()
+    source_folder = st.selectbox("Select Source Folder", options=subfolders)
 
 configTab, reviewTab, submitTab = st.tabs(["Config", "Review", "Submit"])
 
