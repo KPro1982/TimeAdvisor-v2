@@ -34,14 +34,11 @@ if 'root_path'  not in st.session_state:
     st.session_state.root_path = os.getcwd()
 if 'selected_folder'  not in st.session_state:
     st.session_state.selected_folder = os.getcwd()
-# if 'selected_path' not in st.session_state:
-#     st.session_state.selected_path = "Please select a source folder"
-# if 'client_matter_data_file' not in st.session_state:
-#     st.session_state.client_matter_data_file = "Please selected a data file"
+
 
 
 # load the openai_api key
-openai_api_key = st.secrets["OpenAI_key"]
+# openai_api_key = st.secrets["openai_api_key"]
 
 def GetDesktopFolder():
     CSIDL_DESKTOP = 0
