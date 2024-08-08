@@ -7,7 +7,7 @@ import pandas as pd
 import time
 import ctypes
 
-from ctypes import wintypes, windll
+from ctypes import wintypes
 from enum import Enum
 from os import listdir
 from os.path import join, isfile
@@ -45,7 +45,7 @@ openai_api_key = st.secrets["OpenAI_key"]
 
 def GetDesktopFolder():
     CSIDL_DESKTOP = 0
-    _SHGetFolderPath = windll.shell32.SHGetFolderPathW
+    _SHGetFolderPath = ctypes.windll.shell32.SHGetFolderPathW
     _SHGetFolderPath.argtypes = [wintypes.HWND,
                                 ctypes.c_int,
                                 wintypes.HANDLE,
@@ -116,15 +116,9 @@ def Config():
     if 'selected_path' in st.session_state:
         st.write("Source folder = ", st.session_state.selected_path)
 
-    cmdf = ""
-
-    uploaded_file = st.file_uploader("Choose a file")
-    if uploaded_file is not None:
-        st.session_state.client_matter_data_file = uploaded_file
-        print(st.session_state.client_matter_data_file)
-    if 'client_matter_data_file' in st.session_state:    
-         st.write("Client-Matter Data File = ", st.session_state.client_matter_data_file.name)
-
+    uploaded_file = st.file_uploader("Select Client Data File")
+    if uploaded_file:
+        st.session_state.client_data_file = uploaded_file
 
 
         
